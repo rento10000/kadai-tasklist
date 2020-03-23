@@ -35,7 +35,7 @@ public class NewServlet extends HttpServlet {
         String content = "hello";
         m.setContent(content);
 
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis()); // 現在の日時を取得
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         m.setCreated_at(currentTime);
         m.setUpdated_at(currentTime);
 
