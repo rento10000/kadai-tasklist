@@ -27,6 +27,14 @@ public class TaskList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
     @Column(name = "title", length = 255, nullable = false)
     private String title;
 

@@ -1,4 +1,4 @@
-package contrtollers;
+package controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,9 +23,9 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        List<TaskList> messages = em.createNamedQuery("getAllTaskList", TaskList.class)
+        List<TaskList> tasks = em.createNamedQuery("getAllTaskList", TaskList.class)
                                    .getResultList();
-        response.getWriter().append(Integer.valueOf(messages.size()).toString());
+        response.getWriter().append(Integer.valueOf(tasks.size()).toString());
 
         em.close();
     }
