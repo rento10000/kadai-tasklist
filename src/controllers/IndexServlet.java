@@ -26,12 +26,25 @@ public class IndexServlet extends HttpServlet {
             throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        List<TaskList> tasks = em.createNamedQuery("getAllTaskList", TaskList.class)
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
+        }
+
+        List<TaskList> messages = em.createNamedQuery("getAllTaskList", TaskList.class)
+                .setFirstResult(15 * (page - 1))
+                .setMaxResults(15)
                 .getResultList();
+
+        long tasks_count = (long) em.createNamedQuery("getMessagesCount", Long.class)
+                .getSingleResult();
 
         em.close();
 
-        request.setAttribute("tasks", tasks);
+        request.setAttribute("messages", messages);
+        request.setAttribute("messages_count", tasks_count);
+        request.setAttribute("page", page);
 
         if (request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));

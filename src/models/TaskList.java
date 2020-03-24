@@ -10,14 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
 @Entity
 
-
 @NamedQueries({
-    @NamedQuery(
-            name = "getAllTaskList",
-            query = "SELECT m FROM TaskList AS m ORDER BY m.id DESC"
-            )
+        @NamedQuery(name = "getAllTaskList", query = "SELECT m FROM TaskList AS m ORDER BY m.id DESC"),
+        @NamedQuery(name = "getTaskListCount", query = "SELECT COUNT(m) FROM TaskList AS m")
 })
 
 @Table(name = "tasks")
@@ -27,7 +25,6 @@ public class TaskList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     public String getTitle() {
         return title;
     }
@@ -35,6 +32,7 @@ public class TaskList {
     public void setTitle(String title) {
         this.title = title;
     }
+
     @Column(name = "title", length = 255, nullable = false)
     private String title;
 
