@@ -26,16 +26,16 @@ public class EditServlet extends HttpServlet {
             throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        // 該当のIDのメッセージ1件のみをデータベースから取得
+
         TaskList m = em.find(TaskList.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();
 
-        // メッセージ情報とセッションIDをリクエストスコープに登録
+
         request.setAttribute("message", m);
         request.setAttribute("_token", request.getSession().getId());
 
-        // メッセージIDをセッションスコープに登録
+
         request.getSession().setAttribute("message_id", m.getId());
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");
