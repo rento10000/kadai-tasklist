@@ -40,7 +40,9 @@ public class UpdateServlet extends HttpServlet {
             m.setUpdated_at(currentTime);
 
             em.getTransaction().begin();
+            em.getTransaction().begin();
             em.getTransaction().commit();
+            request.getSession().setAttribute("flush", "更新が完了しました。");
             em.close();
 
             request.getSession().removeAttribute("message_id");
