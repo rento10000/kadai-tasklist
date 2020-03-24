@@ -32,18 +32,18 @@ public class IndexServlet extends HttpServlet {
         } catch (NumberFormatException e) {
         }
 
-        List<TaskList> messages = em.createNamedQuery("getAllTaskList", TaskList.class)
+        List<TaskList> tasks = em.createNamedQuery("getAllTaskList", TaskList.class)
                 .setFirstResult(15 * (page - 1))
                 .setMaxResults(15)
                 .getResultList();
 
-        long tasks_count = (long) em.createNamedQuery("getMessagesCount", Long.class)
+        long tasks_count = (long) em.createNamedQuery("getTaskListCount", Long.class)
                 .getSingleResult();
 
         em.close();
 
-        request.setAttribute("messages", messages);
-        request.setAttribute("messages_count", tasks_count);
+        request.setAttribute("tasks", tasks);
+        request.setAttribute("tasks_count", tasks_count);
         request.setAttribute("page", page);
 
         if (request.getSession().getAttribute("flush") != null) {

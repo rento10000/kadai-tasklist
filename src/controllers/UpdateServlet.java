@@ -28,7 +28,7 @@ public class UpdateServlet extends HttpServlet {
         if (_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            TaskList m = em.find(TaskList.class, (Integer) (request.getSession().getAttribute("message_id")));
+            TaskList m = em.find(TaskList.class, (Integer) (request.getSession().getAttribute("task_id")));
 
             String title = request.getParameter("title");
             m.setTitle(title);
@@ -45,7 +45,7 @@ public class UpdateServlet extends HttpServlet {
             request.getSession().setAttribute("flush", "更新が完了しました。");
             em.close();
 
-            request.getSession().removeAttribute("message_id");
+            request.getSession().removeAttribute("task_id");
 
             response.sendRedirect(request.getContextPath() + "/index");
         }
