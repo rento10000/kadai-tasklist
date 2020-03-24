@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.TaskList;
+import models.Task;
 import utils.DBUtil;
 
 
@@ -18,9 +18,9 @@ import utils.DBUtil;
 public class ShowServlet extends HttpServlet {
         private static final long serialVersionUID = 1L;
 
+
     public ShowServlet() {
         super();
-
     }
 
 
@@ -28,12 +28,12 @@ public class ShowServlet extends HttpServlet {
             EntityManager em = DBUtil.createEntityManager();
 
 
-            TaskList m = em.find(TaskList.class, Integer.parseInt(request.getParameter("id")));
+            Task m = em.find(Task.class, Integer.parseInt(request.getParameter("id")));
 
             em.close();
 
 
-            request.setAttribute("task", m);
+            request.setAttribute("message", m);
 
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/show.jsp");
             rd.forward(request, response);

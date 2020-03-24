@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.TaskList;
+import models.Task;
 import utils.DBUtil;
 
 @WebServlet(name = "index", urlPatterns = { "/index" })
@@ -26,30 +26,34 @@ public class IndexServlet extends HttpServlet {
             throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+
         int page = 1;
         try {
             page = Integer.parseInt(request.getParameter("page"));
-        } catch (NumberFormatException e) {
-        }
+        } catch(NumberFormatException e) {}
 
-        List<TaskList> tasks = em.createNamedQuery("getAllTaskList", TaskList.class)
-                .setFirstResult(15 * (page - 1))
-                .setMaxResults(15)
-                .getResultList();
 
-        long tasks_count = (long) em.createNamedQuery("getTaskListCount", Long.class)
-                .getSingleResult();
+        List<Task> messages = em.createNamedQuery("getAllMessages", Task.class)
+                                   .setFirstResult(15 * (page - 1))
+                                   .setMaxResults(15)
+                                   .getResultList();
+
+
+        long messages_count = (long)em.createNamedQuery("getMessagesCount", Long.class)
+                                      .getSingleResult();
 
         em.close();
 
-        request.setAttribute("tasks", tasks);
-        request.setAttribute("tasks_count", tasks_count);
+        request.setAttribute("messages", messages);
+        request.setAttribute("messages_count", messages_count);
         request.setAttribute("page", page);
+
 
         if (request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
         }
+
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/index.jsp");
         rd.forward(request, response);
     }

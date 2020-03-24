@@ -9,17 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.TaskList;
+import models.Task;
 import utils.DBUtil;
+
 
 @WebServlet("/destroy")
 public class DestroyServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+
     public DestroyServlet() {
         super();
 
     }
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,7 +30,8 @@ public class DestroyServlet extends HttpServlet {
         if (_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            TaskList m = em.find(TaskList.class, (Integer) (request.getSession().getAttribute("message_id")));
+
+            Task m = em.find(Task.class, (Integer) (request.getSession().getAttribute("message_id")));
 
             em.getTransaction().begin();
             em.remove(m);
@@ -35,7 +39,9 @@ public class DestroyServlet extends HttpServlet {
             request.getSession().setAttribute("flush", "削除が完了しました。");
             em.close();
 
+
             request.getSession().removeAttribute("message_id");
+
 
             response.sendRedirect(request.getContextPath() + "/index");
         }

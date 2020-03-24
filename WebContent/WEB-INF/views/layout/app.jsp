@@ -17,7 +17,7 @@
                 ${param.content}
             </div>
             <div id="footer">
-                by Suguru Sasai.
+                by Suguru Sasaki.
             </div>
         </div>
     </body>
